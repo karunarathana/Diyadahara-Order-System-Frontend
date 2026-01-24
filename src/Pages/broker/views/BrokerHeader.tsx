@@ -1,0 +1,36 @@
+
+import profilepic from '../../../assets/Logo/diyadahara.png'
+
+export default function BrokerHeader() {
+    return (
+        <div className='header_main_wrapper h-[4em] bg-white rounded-tr-2xl flex items-center justify-between px-[15px]'>
+
+            <div>
+                <h1 className='text-[1.8rem] font-semibold text-gray-600'>Overview</h1>
+            </div>
+            <div className='flex gap-[15px] items-center'>
+                <div>
+                    <div className='border flex gap-3 w-[15em] p-[5px] rounded-[15px]'>
+                        <img className='w-[20px]' src={""} alt="" />
+                        <input className='' type="search" name="" placeholder='Search' />
+                    </div>
+                </div>
+                <div>
+                    <div className='border w-[2.5em] rounded-full h-[2.5em] flex items-center justify-center'>
+                        <img className='w-[80%] h-[80%]' src={""} alt="" />
+                    </div>
+                </div>
+                <div>
+                    <div className='border w-[2.5em] rounded-full h-[2.5em] flex items-center justify-center'>
+                        <img className='w-[80%] h-[80%]' src={""} alt="" />
+                    </div>
+                </div>
+                <div>
+                    <div className='border w-[3.5em] rounded-full h-[3.5em] flex items-center justify-center'>
+                        <img className='w-[70%] h-[70%]' src={profilepic} alt="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
