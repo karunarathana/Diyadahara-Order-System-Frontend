@@ -62,7 +62,7 @@ export default function DashBoard() {
             setFilterProducts(productResponse.data.data);
             console.log(productResponse.data.data);
             console.log(orderItems);
-            
+
 
 
         } catch (error) {
@@ -183,41 +183,67 @@ export default function DashBoard() {
         }
     };
 
-    const placeOrder = () => {
+    const placeOrder = async () => {
 
-        if (customerId !== 0) {
-            // const orderdataObj = {
-            //     customerId: customerId,
-            //     price: cartItems.reduce(
-            //         (total, item) => total + item.foodPrice * item.quantity,
-            //         0
-            //     ).toFixed(2),
-            //     createBy: "Anuja",
-            //     orderItems: orderItems
+        if (customerId != 0) {
+            const orderdataObj = {
+                customerId: customerId,
+                price: cartItems.reduce(
+                    (total, item) => total + item.foodPrice * item.quantity,
+                    0
+                ).toFixed(2),
+                createBy: "Anuja",
+                orderItems: orderItems
 
-            // }
+            }
             setCustomerId(0);
-            //Backend Logic
-        }else{
-             showNotification(
-                    "info",
-                    "Error",
-                    "Check Phone Number"
+            try {
+                const response = await axios.post(
+                    "http://localhost:8080/api/com-diyadahara/create-order",
+                    orderdataObj
                 );
+                console.log("**********************************")
+                console.log("API Call Started In PlaceOrder");
+                console.log("**********************************")
+                console.log("API Response:", response.data);
+                console.log("API Call Finished In PlaceOrder");
+                console.log("**********************************")
+
+                if (response.data === "Order Placed Successfully") {
+                    showNotification(
+                        "success",
+                        "Success",
+                        "Order place successfully!"
+                    );
+                }
+            } catch (error: any) {
+                console.error("API Error:", error);
+                showNotification(
+                    "error",
+                    "Error",
+                    error.response?.data?.message || "Something went wrong!"
+                );
+            }
+        } else {
+            showNotification(
+                "info",
+                "Error",
+                "Check Phone Number"
+            );
         }
 
     }
 
     const handleSearch = (value: string) => {
-    const searchValue = value.trim();
-    if (!searchValue) return setFilterProducts(products);
-    
-    const result = products.filter(
-      (item: any) => item.foodName.toLowerCase().includes(searchValue)
-    );
-    
-    setFilterProducts(result);
-  };
+        const searchValue = value.trim();
+        if (!searchValue) return setFilterProducts(products);
+
+        const result = products.filter(
+            (item: any) => item.foodName.toLowerCase().includes(searchValue)
+        );
+
+        setFilterProducts(result);
+    };
 
     return (
         <>
@@ -236,7 +262,7 @@ export default function DashBoard() {
                                                 name="search"
                                             >
                                                 <Search
-                                                    placeholder="input phone number text"
+                                                    placeholder="Search item"
                                                     allowClear
                                                     enterButton="Search"
                                                     size="large"
