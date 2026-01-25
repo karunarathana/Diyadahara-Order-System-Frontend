@@ -56,7 +56,7 @@ function MainDashBoard() {
     const greeting = hour < 12 ? "morning" : hour < 18 ? "afternoon" : "evening";
 
     const StatCard = ({ title, value, icon: Icon, color, trend }: any) => (
-        <div className="bg-green-200 rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
+        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
             <div className="flex items-center justify-between mb-4">
                 <div className={`p-3 rounded-lg ${color} bg-opacity-10 bg-blue-600`}>
                     <Icon className={`h-6 w-6 ${color}`} />
@@ -88,7 +88,7 @@ function MainDashBoard() {
 
     return (
         <div>
-            <div className={loadBar ? 'flex h-screen items-center justify-center' : "hidden"}>
+            <div className={loadBar ? 'flex h-[80vh] items-center justify-center' : "hidden"}>
                 <CircularProgressWithLabel />
             </div>
 

@@ -7,7 +7,6 @@ import profilePic from "../../../assets/Logo/diyadahara.png";
 export default function Bprofile() {
 
   const [oldPassword, setOldPassword] = useState("");
-  const [name, setUserName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState<String>("");
   const [password, setPassword] = useState("");
   const [cPassword, setCPassword] = useState("");
@@ -112,27 +111,6 @@ export default function Bprofile() {
               </div>
             </div>
             <div className="w-[70%] p-[10px] overflow-auto">
-              <h2 className="font-serif text-[1.3em] text-gray-400">Personal Information</h2>
-              <div className="form border-b-2 py-[10px]">
-                <div className="mb-[5px]">
-                  <p className="font-serif mb-[5px]">User Name:</p>
-                  <TextField onChange={(e) => { setUserName(e.target.value) }} disabled value={getSessionData()[2]} size="small" sx={{ width: "90%", backgroundColor: "#f0f0f0", border: "none" }} color="success" label={name} variant="outlined" />
-                </div>
-                <div className="mb-[5px]">
-                  <p className="font-serif mb-[5px]">Phone Number:</p>
-                  <TextField disabled value={+94719208046} size="small" sx={{ width: "90%", backgroundColor: "#f0f0f0", border: "none" }} color="success" variant="outlined" />
-                </div>
-                <div className="mb-[5px]">
-                  <p className="font-serif mb-[5px]">NIC Number:</p>
-                  <TextField disabled value={200116403600} size="small" sx={{ width: "90%", backgroundColor: "#f0f0f0", border: "none" }} color="success" variant="outlined" />
-                </div>
-                <div className="mb-[5px]">
-                  <p className="font-serif mb-[5px]">Verify:</p>
-                  <div>
-                    <p className="p-[5px] bg-orange-300 w-[15%] rounded-2xl text-center text-white font-serif">Verify</p>
-                  </div>
-                </div>
-              </div>
               <div>
                 <h2 className="font-serif text-[1.3em] text-gray-400 mb-[10px]">Security</h2>
                 <div className="mb-[5px]">
