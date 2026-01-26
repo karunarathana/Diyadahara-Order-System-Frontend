@@ -6,6 +6,7 @@ import CreateCustomerAccountDrawer from '../function/CreateCustomerAccountDrawer
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ReloadOutlined } from '@ant-design/icons';
+import API_ENDPOINTS from '../../../constant/backend-endpoints';
 
 const { Search } = Input;
 
@@ -31,7 +32,7 @@ export default function Hotel() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:8080/api/com-diyadahara/view-all-customer');
+      const response = await axios.get(API_ENDPOINTS.VIEW_ALL_CUSTOMERS);
       setData(response.data);
       setFilteredData(response.data);
     } catch (error) {

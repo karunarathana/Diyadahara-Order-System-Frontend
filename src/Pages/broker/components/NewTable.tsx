@@ -5,6 +5,7 @@ import UpdateCustomerDrawer from '../subviews/UpdateUserDrawer';
 import ConfirmDelete from './Confirmation';
 import { showNotification } from './Notification';
 import axios from 'axios';
+import API_ENDPOINTS from '../../../constant/backend-endpoints';
 
 interface DataType {
   customerID: number;
@@ -98,7 +99,7 @@ async function handleDelete(key: number,reloadFetch:()=>void) {
 
     try {
         const response = await axios.delete(
-            "http://localhost:8080/api/com-diyadahara/delete-customer",
+            API_ENDPOINTS.DELTE_CUSTOMERS,
             {
                 params: {
                     customerId: key,
