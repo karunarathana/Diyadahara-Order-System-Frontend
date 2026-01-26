@@ -3,6 +3,7 @@ import { EditOutlined } from '@ant-design/icons';
 import { Button, Col, Drawer, Form, Input, Row, Space } from 'antd';
 import { showNotification } from '../components/Notification';
 import axios from 'axios';
+import API_ENDPOINTS from '../../../constant/backend-endpoints';
 
 const UpdateCustomerDrawer: React.FC<{ cId: number, name: string, email: string, phone: string,fetchFunc:()=>void }> = (props) => {
     const [open, setOpen] = useState(false);
@@ -19,7 +20,7 @@ const UpdateCustomerDrawer: React.FC<{ cId: number, name: string, email: string,
         console.log('Form Values:', values);
         try {
             const response = await axios.post(
-                "http://localhost:8080/api/com-diyadahara/update-customer",
+                API_ENDPOINTS.UPDATE_CUSTOMERS,
                 values
             );
             console.log("**********************************")
