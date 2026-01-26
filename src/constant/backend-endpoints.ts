@@ -1,4 +1,5 @@
-let BACKEND_ENDPOINT = "https://orders-manage-production.up.railway.app/";
+// let BACKEND_ENDPOINT = "https://orders-manage-production.up.railway.app/";
+let BACKEND_ENDPOINT = "http://localhost:8080/";
 let API_ROOT_ENDPOINT = "api/com-diyadahara";
 
 const API_ENDPOINTS = {

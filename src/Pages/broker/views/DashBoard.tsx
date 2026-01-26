@@ -252,7 +252,7 @@ export default function DashBoard() {
                 <CircularProgressWithLabel />
             </div>
             <div className={(loadBar) ? "hidden" : ""}>
-                <div className='load_item_wrapper flex'>
+                <div className='load_item_wrapper flex h-[85vh]'>
                     <div className='w-[70%] bg-white m-[12px] rounded-[10px] p-[15px]'>
                         <div className='flex gap-2 justify-between'>
                             <div className='w-[100%]'>

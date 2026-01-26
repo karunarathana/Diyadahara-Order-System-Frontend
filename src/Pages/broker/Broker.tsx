@@ -52,7 +52,7 @@ export default function Broker() {
                         <div className='flex flex-col gap-3.5 px-[20px] mt-4'>
                             <div onClick={() => { setRedirectPage("mainBoard") }} className='flex items-center gap-3 h-[2.4em] bg-blue-300 cursor-pointer rounded-lg hover:bg-slate-100 px-[10px]'>
                                 <img className='flex justify-center w-[30px]' src={dash} alt="" />
-                                <p className='hidden md:flex text-[1.1rem] text-gray-500 font-semibold'>Dashboard</p>
+                                <p className='hidden md:flex text-[1.1rem] text-white font-semibold'>Dashboard</p>
                             </div>
                              <div onClick={() => { setRedirectPage("dashBoard") }} className='flex items-center gap-3 h-[2.4em] cursor-pointer hover:bg-slate-100 px-[10px]'>
                                 <img className='w-[30px]' src={bill} alt="" />
