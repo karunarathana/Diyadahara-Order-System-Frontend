@@ -3,6 +3,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Button, Col, Drawer, Form, Input, Row, Space } from 'antd';
 import { showNotification } from '../components/Notification';
 import axios from 'axios';
+import API_ENDPOINTS from '../../../constant/backend-endpoints';
 
 interface CreateCategoryProps {
     backendApi: () => void;
@@ -25,7 +26,7 @@ const CreateCategoryDrawer: React.FC<CreateCategoryProps> = ({
         console.log('Form Values:', values.categoryName);
         try {
             const response = await axios.post(
-                "http://localhost:8080/api/com-diyadahara/create-category",
+                API_ENDPOINTS.CREATE_CATEGORY,
                 null,
                 {
                     params: {

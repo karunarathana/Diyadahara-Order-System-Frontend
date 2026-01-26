@@ -6,6 +6,7 @@ import axios from "axios";
 import CreateCategoryDrawer from "../function/CreateCategoryDrawer";
 import CategoryTable from "../function/CategoryTable";
 import { ReloadOutlined } from "@ant-design/icons";
+import API_ENDPOINTS from "../../../constant/backend-endpoints";
 
 const { Search } = Input;
 
@@ -23,7 +24,7 @@ function Category() {
     const fetchData = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:8080/api/com-diyadahara/view-all-category');
+            const response = await axios.get(API_ENDPOINTS.VIEW_ALL_CATEGORY);
             console.log(response.data.data);
             setData(response.data.data);
             setFilteredData(response.data.data);
