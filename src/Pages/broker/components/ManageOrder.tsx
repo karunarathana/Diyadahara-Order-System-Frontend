@@ -4,6 +4,7 @@ import OrderItemCard from '../components/OrderItem'
 import axios from "axios";
 import { showNotification } from "./Notification";
 import notFound from '../../../assets/Logo/notfound.jpg'
+import API_ENDPOINTS from "../../../constant/backend-endpoints";
 
 interface Customer {
     customerEmail: string;
@@ -64,7 +65,7 @@ export default function ManageOrder() {
     const fetchData = async () => {
         try {
             const response = await axios.get(
-                'http://localhost:8080/api/com-diyadahara/view-order-relevant-customer',
+                API_ENDPOINTS.VIEWS_ORDER_SINGLE_CUSTOMER,
                 {
                     params: {
                         CusPhoneNumber: phoneNumber
@@ -123,8 +124,10 @@ export default function ManageOrder() {
             <div>
                 <h2 className="text-[2rem] font-semibold font-sans">Order Management</h2>
             </div>
-            <div className="mt-1">
-                <Space.Compact style={{ width: '30%' }}>
+            <div className="w-[100%] mt-1 md:w-[30%]">
+                <Space.Compact style={{
+                    width: '100%',
+                }}>
                     <Input onChange={(e) => { setphoneNumber(e.target.value) }} placeholder='Check Phone Number' />
                     <Button onClick={() => { checkCustomer() }} type="primary">Submit</Button>
                 </Space.Compact>
@@ -142,7 +145,7 @@ export default function ManageOrder() {
                     <div className="h-[50vh]">
                         <img className="h-full" src={notFound} alt="" />
                     </div>
-                    <p className="mt-1 text-[2.5rem] font-sans font-semibold">No orders found</p>
+                    <p className="text-[1rem] md: mt-1 text-[2.5rem] font-sans font-semibold">No orders found</p>
                 </div>
             )}
         </div>

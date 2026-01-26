@@ -3,6 +3,7 @@ import { EditOutlined } from '@ant-design/icons';
 import { Button, Col, Drawer, Form, Input, Row, Space } from 'antd';
 import { showNotification } from '../components/Notification';
 import axios from 'axios';
+import API_ENDPOINTS from '../../../constant/backend-endpoints';
 
 const UpdateCategoryDrawer: React.FC<{ categoryName: string, categoryId: number }> = (props) => {
     const [open, setOpen] = useState(false);
@@ -19,7 +20,7 @@ const UpdateCategoryDrawer: React.FC<{ categoryName: string, categoryId: number 
         console.log('Form Values:', values.categoryName);
         try {
             const response = await axios.post(
-                "http://localhost:8080/api/com-diyadahara/update-category-by-id",
+                API_ENDPOINTS.UPDATE_CATEGORY,
                 null,
                 {
                     params: {

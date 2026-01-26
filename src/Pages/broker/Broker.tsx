@@ -46,37 +46,37 @@ export default function Broker() {
                 <div className='left_wrapper w-[25%]  bg-white h-[100%] rounded-tl-2xl rounded-bl-2xl'>
                     <div className='sidebar_main_wrapper h-[100%]'>
                         <div className='text-gray-600 flex flex-col items-center justify-center '>
-                            <p className='text-[2rem] text-center font-bold'>Diyadahara</p>
-                            <p className='text-[2rem] text-center font-bold'>Resort</p>
+                            <p className='text-[1rem] md:text-[2rem] text-center font-bold'>Diyadahara</p>
+                            <p className='text-[1rem] md:text-[2rem] text-center font-bold'>Resort</p>
                         </div>
                         <div className='flex flex-col gap-3.5 px-[20px] mt-4'>
                             <div onClick={() => { setRedirectPage("mainBoard") }} className='flex items-center gap-3 h-[2.4em] bg-blue-300 cursor-pointer rounded-lg hover:bg-slate-100 px-[10px]'>
-                                <img className='w-[30px]' src={dash} alt="" />
-                                <p className='text-[1.1rem] text-gray-500 font-semibold'>Dashboard</p>
+                                <img className='flex justify-center w-[30px]' src={dash} alt="" />
+                                <p className='hidden md:flex text-[1.1rem] text-gray-500 font-semibold'>Dashboard</p>
                             </div>
                              <div onClick={() => { setRedirectPage("dashBoard") }} className='flex items-center gap-3 h-[2.4em] cursor-pointer hover:bg-slate-100 px-[10px]'>
                                 <img className='w-[30px]' src={bill} alt="" />
-                                <p className='text-[1.1rem] text-gray-500 font-semibold'>Place Order</p>
+                                <p className='hidden md:flex text-[1.1rem] text-gray-500 font-semibold'>Place Order</p>
                             </div>
                             <div onClick={() => { setRedirectPage("order") }} className='flex items-center gap-3 h-[2.4em] cursor-pointer hover:bg-slate-100 px-[10px]'>
                                 <img className='w-[30px]' src={order} alt="" />
-                                <p className='text-[1.1rem] text-gray-500 font-semibold'>Customer Order</p>
+                                <p className='hidden md:flex text-[1.1rem] text-gray-500 font-semibold'>Customer Order</p>
                             </div>
                             <div onClick={() => { setRedirectPage("addusers") }} className='flex items-center gap-3 h-[2.4em] cursor-pointer hover:bg-slate-100 px-[10px]'>
                                 <img className='w-[30px]' src={cutomer} alt="" />
-                                <p className='text-[1.1rem] text-gray-500 font-semibold'>Manage Customers</p>
+                                <p className='hidden md:flex text-[1.1rem] text-gray-500 font-semibold'>Manage Customers</p>
                             </div>
                             <div onClick={() => { setRedirectPage("category") }} className='flex items-center gap-3 h-[2.4em] cursor-pointer hover:bg-slate-100 px-[10px]'>
                                 <img className='w-[30px]' src={category} alt="" />
-                                <p className='text-[1.1rem] text-gray-500 font-semibold'>Manage Categories</p>
+                                <p className='hidden md:flex text-[1.1rem] text-gray-500 font-semibold'>Manage Categories</p>
                             </div>
                             <div onClick={() => { setRedirectPage("product") }} className='flex items-center gap-3 h-[2.4em] cursor-pointer hover:bg-slate-100 px-[10px]'>
                                 <img className='w-[30px]' src={mproduct} alt="" />
-                                <p className='text-[1.1rem] text-gray-500 font-semibold'>Manage Product</p>
+                                <p className='hidden md:flex text-[1.1rem] text-gray-500 font-semibold'>Manage Product</p>
                             </div>
                             <div onClick={() => { setRedirectPage("profile") }} className='flex items-center gap-3 h-[2.4em] cursor-pointer hover:bg-slate-100 px-[10px]'>
                                 <img className='w-[30px]' src={account} alt="" />
-                                <p className='text-[1.1rem] text-gray-500 font-semibold'>Account</p>
+                                <p className='hidden md:flex text-[1.1rem] text-gray-500 font-semibold'>Account</p>
                             </div>
 
                         </div>

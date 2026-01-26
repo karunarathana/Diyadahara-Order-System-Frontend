@@ -11,6 +11,7 @@ import {
     AlertCircle
 } from 'lucide-react';
 import axios from "axios";
+import API_ENDPOINTS from "../../../constant/backend-endpoints";
 
 function MainDashBoard() {
     const [loadBar, setLoadBar] = useState(true);
@@ -27,7 +28,7 @@ function MainDashBoard() {
     const fetchData = async () => {
         try {
             const response = await axios.get(
-                'http://localhost:8080/api/com-diyadahara/get-dashboard-details'
+                API_ENDPOINTS.ALL_DASHBOARD_DETIALS
             );
             const statsObj = {
                 totalOrders: response.data.allProduct,

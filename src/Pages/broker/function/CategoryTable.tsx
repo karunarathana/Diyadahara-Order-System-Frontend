@@ -5,6 +5,7 @@ import UpdateCategoryDrawer from '../subviews/UpdateCategoryDrawer';
 import ConfirmDelete from '../components/Confirmation';
 import axios from 'axios';
 import { showNotification } from '../components/Notification';
+import API_ENDPOINTS from '../../../constant/backend-endpoints';
 
 interface DataType {
     categoryId: number;
@@ -61,7 +62,7 @@ async function handleDelete(key: number, backFunc: () => void) {
 
     try {
         const response = await axios.delete(
-            "http://localhost:8080/api/com-diyadahara/delete-category-by-id",
+            API_ENDPOINTS.DELTE_CATEGORY,
             {
                 params: {
                     categoryId: key,

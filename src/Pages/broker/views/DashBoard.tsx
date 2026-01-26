@@ -7,6 +7,7 @@ import { Box } from '@mui/material';
 import axios from 'axios';
 import { Button, Form, Input, Space } from 'antd';
 import { showNotification } from '../components/Notification';
+import API_ENDPOINTS from '../../../constant/backend-endpoints';
 
 interface CartItem extends responseProductByCategory {
     quantity: number;
@@ -48,9 +49,9 @@ export default function DashBoard() {
     const fetchData = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:8080/api/com-diyadahara/view-all-category');
+            const response = await axios.get(API_ENDPOINTS.VIEW_ALL_CATEGORY);
             const productResponse = await axios.get(
-                'http://localhost:8080/api/com-diyadahara/get-all-product-by-category',
+                API_ENDPOINTS.GET_ALL_PRODUCT_SINGLE_CATEGORY,
                 {
                     params: {
                         CategoryId: 1,
@@ -152,7 +153,7 @@ export default function DashBoard() {
     const checkCustomer = async () => {
         try {
             const customerResponse = await axios.get(
-                'http://localhost:8080/api/com-diyadahara/view-single-customer',
+                API_ENDPOINTS.VIEW_SINGLE_CUSTOMER,
                 {
                     params: {
                         customerId: phoneNumber?.trim(),
@@ -199,7 +200,7 @@ export default function DashBoard() {
             setCustomerId(0);
             try {
                 const response = await axios.post(
-                    "http://localhost:8080/api/com-diyadahara/create-order",
+                    API_ENDPOINTS.CREATE_ORDER,
                     orderdataObj
                 );
                 console.log("**********************************")
@@ -254,8 +255,14 @@ export default function DashBoard() {
                 <div className='load_item_wrapper flex'>
                     <div className='w-[70%] bg-white m-[12px] rounded-[10px] p-[15px]'>
                         <div className='flex gap-2 justify-between'>
-                            <div>
-                                <Box sx={{ width: 300, mt: 4 }}>
+                            <div className='w-[100%]'>
+                                <Box sx={{
+                                    width: {
+                                        xs: '100%',   // mobile
+                                        sm: '80%',    // small tablets
+                                        md: '50%',    // laptops & desktop
+                                    }, mt: 4
+                                }}>
                                     <Form form={form} onFinish={handleFinish}>
                                         <Space orientation="vertical" style={{ width: "100%" }}>
                                             <Form.Item

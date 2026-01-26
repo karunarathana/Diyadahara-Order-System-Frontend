@@ -3,6 +3,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Button, Col, DatePicker, Drawer, Form, Input, Row, Select, Space } from 'antd';
 import { showNotification } from '../components/Notification';
 import axios from 'axios';
+import API_ENDPOINTS from '../../../constant/backend-endpoints';
 
 interface DataType {
     categoryId: number;
@@ -27,7 +28,7 @@ const CreateProductDrawer: React.FC = () => {
     const fetchData = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:8080/api/com-diyadahara/view-all-category');
+            const response = await axios.get(API_ENDPOINTS.VIEW_ALL_CATEGORY);
             setData(response.data.data);
         } catch (error) {
             console.error('Failed to fetch category:', error);
@@ -55,7 +56,7 @@ const CreateProductDrawer: React.FC = () => {
         }
         try {
             const response = await axios.post(
-                "http://localhost:8080/api/com-diyadahara/create-product",
+                API_ENDPOINTS.CREATE_PRODUCT,
                 productDto
             );
             console.log("**********************************")
