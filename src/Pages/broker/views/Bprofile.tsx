@@ -80,11 +80,11 @@ export default function Bprofile() {
       </div>
       <div>
         <div className="profile_main_wrapper  w-[95%] h-[75vh] mt-[10px] mx-auto">
-          <div className=" bg-white h-[95%] rounded-[10px] flex">
-            <div className="w-[30%] border-r-2 px-[20px]">
+          <div className=" bg-white h-[95%] overflow-y-auto rounded-[10px] w-[100%] md:flex">
+            <div className="w-[100%] border-r-2 px-[20px]">
               <div>
-                <div className="flex justify-center">
-                  <div className="border-green-500 border-4 h-[7em] w-[48%] rounded-[100px] p-[3px] mt-[2em] flex">
+                 <div className="flex justify-center">
+                  <div className="border-green-500 border-4 h-[7em] rounded-[100px] p-[3px] mt-[2em] flex">
                     <img className="w-[100%] rounded-[100px]" src={profilePic} alt="" />
                   </div>
                 </div>

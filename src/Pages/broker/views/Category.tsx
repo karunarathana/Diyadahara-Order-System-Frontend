@@ -55,10 +55,16 @@ function Category() {
     return (
         <div className="p-[10px]">
             <ToastContainer />
-            <h2 className="text-2xl font-bold mb-4">Manage Customers</h2>
+            <h2 className="text-2xl font-bold mb-4">Manage Category</h2>
             <div>
                 <div>
-                    <Box sx={{ width: 400, mt: 4 }}>
+                    <Box sx={{
+                        width: {
+                            xs: '100%',   // mobile
+                            sm: '80%',    // small tablets
+                            md: '40%',    // laptops & desktop
+                        }, mt: 4
+                    }}>
                         <Form form={form}>
                             <Space orientation="vertical" style={{ width: "100%" }}>
                                 <Form.Item
@@ -77,7 +83,7 @@ function Category() {
                     </Box>
                 </div>
                 <div className="flex gap-1">
-                    <CreateCategoryDrawer backendApi={fetchData}/>
+                    <CreateCategoryDrawer backendApi={fetchData} />
                     <div>
                         <Button
                             className="no-hover-btn"
@@ -92,7 +98,7 @@ function Category() {
             </div>
 
             <div className="mt-5">
-                <CategoryTable tableData={filteredData} loadingData={loading} backendApi={fetchData}/>
+                <CategoryTable tableData={filteredData} loadingData={loading} backendApi={fetchData} />
             </div>
         </div>
     )

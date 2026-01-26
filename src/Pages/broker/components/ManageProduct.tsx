@@ -6,6 +6,7 @@ import axios from 'axios';
 import CreateProductDrawer from '../function/CreateProductDrawer';
 import ProductTable from '../function/ProductTable';
 import { ReloadOutlined } from '@ant-design/icons';
+import API_ENDPOINTS from '../../../constant/backend-endpoints';
 
 const { Search } = Input;
 
@@ -38,11 +39,11 @@ export default function ManageProduct() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:8080/api/com-diyadahara/view-all-product');
+      const response = await axios.get(API_ENDPOINTS.VIEW_ALL_PRODUCT);
       setData(response.data.data);
       setFilteredData(response.data.data);
     } catch (error) {
-      console.error('Failed to fetch customers:', error);
+      console.error('Failed to fetch Product:', error);
     } finally {
       setLoading(false);
     }
@@ -73,7 +74,13 @@ export default function ManageProduct() {
       <h2 className="text-2xl font-bold mb-4">Manage Product</h2>
       <div>
         <div>
-          <Box sx={{ width: 400, mt: 4 }}>
+          <Box sx={{
+            width: {
+              xs: '100%',   // mobile
+              sm: '80%',    // small tablets
+              md: '40%',    // laptops & desktop
+            }, mt: 4
+          }}>
             <Form form={form} onFinish={handleFinish}>
               <Space orientation="vertical" style={{ width: "100%" }}>
                 <Form.Item
@@ -98,7 +105,7 @@ export default function ManageProduct() {
               className="no-hover-btn"
               type="default"
               icon={<ReloadOutlined />}
-              onClick={()=>{fetchData();}}
+              onClick={() => { fetchData(); }}
             >
               Refresh
             </Button>

@@ -48,11 +48,11 @@ export default function Hotel() {
   const handleSearch = (value: string) => {
     const searchValue = value.trim();
     if (!searchValue) return setFilteredData(data);
-    
+
     const result = data.filter(
       (item: any) => item.phoneNumber.includes(searchValue) || item.phoneNumber.includes(searchValue)
     );
-    
+
     setFilteredData(result);
   };
   return (
@@ -61,7 +61,13 @@ export default function Hotel() {
       <h2 className="text-2xl font-bold mb-4">Manage Customers</h2>
       <div>
         <div>
-          <Box sx={{ width: 400, mt: 4 }}>
+          <Box sx={{
+            width: {
+              xs: '100%',   // mobile
+              sm: '80%',    // small tablets
+              md: '40%',    // laptops & desktop
+            }, mt: 4
+          }}>
             <Form form={form} onFinish={handleFinish}>
               <Space orientation="vertical" style={{ width: "100%" }}>
                 <Form.Item
@@ -86,13 +92,13 @@ export default function Hotel() {
           </Box>
         </div>
         <div className='flex gap-1'>
-          <CreateCustomerAccountDrawer reloadTable={fetchData}/>
+          <CreateCustomerAccountDrawer reloadTable={fetchData} />
           <div>
             <Button
               className="no-hover-btn"
               type="default"
               icon={<ReloadOutlined />}
-              onClick={()=>{fetchData();}}
+              onClick={() => { fetchData(); }}
             >
               Refresh
             </Button>
@@ -101,7 +107,7 @@ export default function Hotel() {
       </div>
 
       <div className="mt-5">
-        <CustomerTable tableData={filteredData} loadingData={loading} backendApi={fetchData}/>
+        <CustomerTable tableData={filteredData} loadingData={loading} backendApi={fetchData} />
       </div>
     </div>
   );
