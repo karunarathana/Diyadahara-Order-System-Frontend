@@ -111,7 +111,7 @@ const CreateCustomerAccountDrawer: React.FC<CustomerTableProps> = ({reloadTable}
                 label="Cutomer Email"
                 style={{ width: '400px' }}
                 rules={[
-                  { required: true, message: 'Please enter user email' },
+                  { required: false, message: 'Please enter user email' },
                   { type: "email", message: "Please enter a valid email address" }
                 ]}
               >

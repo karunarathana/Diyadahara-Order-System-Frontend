@@ -5,9 +5,15 @@ import CompactCartItem from '../components/CartItem';
 import CircularProgressWithLabel from '../components/PrograssBar';
 import { Box } from '@mui/material';
 import axios from 'axios';
-import { Button, Form, Input, Space } from 'antd';
+import { Button, Form, Input, Space, TimePicker } from 'antd';
 import { showNotification } from '../components/Notification';
 import API_ENDPOINTS from '../../../constant/backend-endpoints';
+import NewCustomerModal from '../subviews/ModalCreateCustomer';
+
+interface DashBoardProps {
+  changePage: (value: string) => void;
+  setPhoneNumber: (value: string) => void;
+}
 
 interface CartItem extends responseProductByCategory {
     quantity: number;
@@ -34,16 +40,19 @@ interface responseProductByCategory {
     createdAt: string;
 }
 const { Search } = Input;
-export default function DashBoard() {
+export default function DashBoard({ changePage,setPhoneNumber}: DashBoardProps) {
     const [form] = Form.useForm();
+    const [orderForm] = Form.useForm();
+
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
     const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
     const [categories, setCategories] = useState<responseCategoryData[]>([]);
     const [products, setProducts] = useState<responseProductByCategory[]>([]);
     const [filterProduct, setFilterProducts] = useState<responseProductByCategory[]>([]);
     const [phoneNumber, setphoneNumber] = useState<string>();
-    const [customerId, setCustomerId] = useState<number>();
+    const [customerId, setCustomerId] = useState<number | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     // Fetch data from backend
     const fetchData = async () => {
@@ -140,7 +149,7 @@ export default function DashBoard() {
     const [loadBar, setLoadBar] = useState(true);
     setInterval(() => {
         setLoadBar(false)
-    }, 4000);
+    }, 100);
 
     const handleFinish = (values: { search: string }) => {
         console.log("Search value:", values.search);
@@ -150,6 +159,7 @@ export default function DashBoard() {
             "Product created successfully!"
         );
     };
+
     const checkCustomer = async () => {
         try {
             const customerResponse = await axios.get(
@@ -161,14 +171,15 @@ export default function DashBoard() {
                 }
             );
             console.log(customerResponse.data);
-            setCustomerId(customerResponse.data.data.customerID)
             if (customerResponse.data.msg === "Customer Already Existing In System" && customerResponse.data.statusCode === "200") {
+                setCustomerId(customerResponse.data.data.customerID);
                 showNotification(
                     "success",
                     "Success",
-                    customerResponse.data.msg
+                    `${customerResponse.data.data.customerName} Already Existing In System`
                 );
             } else {
+                setIsModalOpen(true);
                 showNotification(
                     "error",
                     "Error",
@@ -184,20 +195,31 @@ export default function DashBoard() {
         }
     };
 
-    const placeOrder = async () => {
-
+    const placeOrder = async (time:string) => {
+        
+        const customerResponse = await axios.get(
+            API_ENDPOINTS.VIEW_SINGLE_CUSTOMER,
+            {
+                params: {
+                    customerId: phoneNumber?.trim(),
+                },
+            }
+        );
+        setCustomerId(0);
+        console.log(customerResponse.data);
         if (customerId != 0) {
+            console.log(customerResponse.data.data.customerID);
             const orderdataObj = {
-                customerId: customerId,
+                customerId: customerResponse.data.data.customerID,
                 price: cartItems.reduce(
                     (total, item) => total + item.foodPrice * item.quantity,
                     0
                 ).toFixed(2),
                 createBy: "Anuja",
-                orderItems: orderItems
+                orderItems: orderItems,
+                time: time
 
             }
-            setCustomerId(0);
             try {
                 const response = await axios.post(
                     API_ENDPOINTS.CREATE_ORDER,
@@ -211,6 +233,8 @@ export default function DashBoard() {
                 console.log("**********************************")
 
                 if (response.data === "Order Placed Successfully") {
+                    setPhoneNumber(phoneNumber?phoneNumber:'');
+                    changePage('order');
                     showNotification(
                         "success",
                         "Success",
@@ -355,11 +379,34 @@ export default function DashBoard() {
                             </h3>
                         </div>
                         <div>
-                            <button onClick={() => { placeOrder() }} className=" w-[100%] mt-2 bg-orange-400 hover:bg-orange-600 text-white py-2 px-4 rounded-lg font-medium">Checkout</button>
+                            <Form
+                                form={orderForm}
+                                onFinish={(values) => {
+                                    placeOrder(values.orderTime.format("HH:mm"));
+                                }}
+                            >
+                                <Form.Item
+                                    name="orderTime"
+                                    label="Order Time"
+                                    rules={[{ required: true, message: 'Please select time' }]}
+                                >
+                                    <TimePicker format="HH:mm" style={{ width: '100%' }} />
+                                </Form.Item>
+                                <Form.Item label={null}>
+                                    <Button className=" w-[100%] mt-2 bg-orange-400 hover:bg-orange-600 text-white py-2 px-4 rounded-lg font-medium" type="primary" htmlType="submit">
+                                        Checkout
+                                    </Button>
+                                </Form.Item>
+                            </Form>
                         </div>
                     </div>
 
                 </div>
+                <NewCustomerModal
+                    number={phoneNumber}
+                    open={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                />
             </div>
         </>
     )

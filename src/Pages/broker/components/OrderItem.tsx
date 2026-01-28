@@ -1,4 +1,7 @@
 import React from 'react';
+import { showNotification } from './Notification';
+import axios from 'axios';
+import API_ENDPOINTS from '../../../constant/backend-endpoints';
 
 interface Customer {
   customerEmail: string;
@@ -39,6 +42,7 @@ interface Order {
   orderId: number;
   status: string;
   totalPrice: number;
+  time: string;
 }
 
 interface OrderItem {
@@ -68,7 +72,7 @@ interface OrderCardViewProps {
 }
 
 // Single Order Item Card Component
-const OrderItemCardComponent: React.FC<OrderCardProps> = ({ orderItem, onCancel, onSell }) => {
+const OrderItemCardComponent: React.FC<OrderCardProps> = ({ orderItem, onSell }) => {
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -78,6 +82,42 @@ const OrderItemCardComponent: React.FC<OrderCardProps> = ({ orderItem, onCancel,
       minute: '2-digit'
     });
   };
+
+  const canselCustomerOrder = async (orderId:number)=>{
+      console.log(orderId);
+      try {
+              const response = await axios.delete(
+                  API_ENDPOINTS.DELETE_ORDER,
+                  {
+                      params: {
+                          orderId: orderId,
+                      },
+                  }
+              );
+              console.log("**********************************")
+              console.log("API Call Started In Customer handleDelete");
+              console.log("**********************************")
+              console.log("API Response:", response);
+              console.log("API Call Finished In Customer handleDelete");
+              console.log("**********************************")
+      
+              if (response.data === "Order Delete Successfully") {
+                  showNotification(
+                      "success",
+                      "Success",
+                      "Order delete successfully!"
+                  );
+              }
+          } catch (error: any) {
+              console.error("API Error:", error);
+              showNotification(
+                  "error",
+                  "Server Error",
+                  error.response?.data?.message || "Something went wrong!"
+              );
+          }
+      
+  }
 
   const calculateDiscountedPrice = (originalPrice: number, discount: number) => {
     return originalPrice - (originalPrice * discount) / 100;
@@ -93,11 +133,10 @@ const OrderItemCardComponent: React.FC<OrderCardProps> = ({ orderItem, onCancel,
           <h3 className="text-lg font-semibold text-gray-800">
             Order #{orderItem.orderId.orderId}
           </h3>
-          <span className={`px-2 py-1 rounded text-sm font-medium ${
-            orderItem.orderId.status === 'PENDING' 
+          <span className={`px-2 py-1 rounded text-sm font-medium ${orderItem.orderId.status === 'PENDING'
               ? 'bg-yellow-100 text-yellow-800'
               : 'bg-green-100 text-green-800'
-          }`}>
+            }`}>
             {orderItem.orderId.status}
           </span>
         </div>
@@ -169,9 +208,8 @@ const OrderItemCardComponent: React.FC<OrderCardProps> = ({ orderItem, onCancel,
           </div>
           <div>
             <span className="text-gray-600">Status:</span>
-            <span className={`ml-2 font-medium ${
-              orderItem.orderId.customerId.verified ? 'text-green-600' : 'text-yellow-600'
-            }`}>
+            <span className={`ml-2 font-medium ${orderItem.orderId.customerId.verified ? 'text-green-600' : 'text-yellow-600'
+              }`}>
               {orderItem.orderId.customerId.verified ? 'Verified' : 'Pending Verification'}
             </span>
           </div>
@@ -181,7 +219,7 @@ const OrderItemCardComponent: React.FC<OrderCardProps> = ({ orderItem, onCancel,
       {/* Action Buttons */}
       <div className="border-t pt-4 flex justify-end space-x-3">
         <button
-          onClick={() => onCancel(orderItem.orderItemId)}
+          onClick={() => canselCustomerOrder(orderItem.orderItemId)}
           className="px-4 py-2 border border-red-600 text-red-600 rounded-md hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors"
         >
           Cancel Order
@@ -198,10 +236,10 @@ const OrderItemCardComponent: React.FC<OrderCardProps> = ({ orderItem, onCancel,
 };
 
 // Main Order Card View Component
-const OrderItemCard: React.FC<OrderCardViewProps> = ({ 
-  orderData, 
-  onCancelOrder, 
-  onSellOrder 
+const OrderItemCard: React.FC<OrderCardViewProps> = ({
+  orderData,
+  onCancelOrder,
+  onSellOrder
 }) => {
   // Calculate total order price
   const calculateTotalOrderPrice = () => {
@@ -228,8 +266,9 @@ const OrderItemCard: React.FC<OrderCardViewProps> = ({
           <div>
             <h2 className="text-2xl font-bold text-gray-800">Order Details</h2>
             <p className="text-gray-600 mt-1">
-              Order #{orderData.itemData[0]?.orderId.orderId} • 
-              Customer: {orderData.itemData[0]?.orderId.customerId.customerName}
+              Order #{orderData.itemData[0]?.orderId.orderId} •
+              Customer: {orderData.itemData[0]?.orderId.customerId.customerName} •
+              Time : {orderData.itemData[0]?.orderId.time}
             </p>
           </div>
           <div className="text-right">
@@ -239,7 +278,7 @@ const OrderItemCard: React.FC<OrderCardViewProps> = ({
             <div className="text-gray-600">Total Amount</div>
           </div>
         </div>
-        
+
         <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
           <div>
             <span className="text-gray-600">Items:</span>
@@ -259,9 +298,8 @@ const OrderItemCard: React.FC<OrderCardViewProps> = ({
           </div>
           <div>
             <span className="text-gray-600">Customer Status:</span>
-            <span className={`ml-2 font-medium ${
-              orderData.itemData[0]?.orderId.customerId.verified ? 'text-green-600' : 'text-yellow-600'
-            }`}>
+            <span className={`ml-2 font-medium ${orderData.itemData[0]?.orderId.customerId.verified ? 'text-green-600' : 'text-yellow-600'
+              }`}>
               {orderData.itemData[0]?.orderId.customerId.verified ? 'Verified' : 'Pending'}
             </span>
           </div>

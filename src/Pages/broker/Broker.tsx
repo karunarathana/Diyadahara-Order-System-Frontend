@@ -20,12 +20,14 @@ import ManageOrder from './components/ManageOrder';
 
 export default function Broker() {
     const [redirectPage, setRedirectPage] = useState("mainBoard");
+    const [phoneNumber, setPhoneNumber] = useState("");
+
     const page = () => {
         switch (redirectPage) {
             case "mainBoard":
                 return<MainDashBoard/>
             case "dashBoard":
-                return <DashBoard />;
+                return <DashBoard  changePage={setRedirectPage} setPhoneNumber={setPhoneNumber} />;
             case "place":
                 return <Bprofile />;
             case "addusers":
@@ -33,7 +35,7 @@ export default function Broker() {
             case "category":
                 return <Category />;
             case "order":
-                return <ManageOrder/>;
+                return <ManageOrder propsPhone={phoneNumber}/>;
             case "profile":
                 return <Bprofile />;
             case "product":

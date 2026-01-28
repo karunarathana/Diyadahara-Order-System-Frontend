@@ -77,7 +77,7 @@ const CustomeDrawer: React.FC<CustomerProps> = (props) => {
                     <Form.Item<FieldType>
                         label="Email"
                         name="customerEmail"
-                        rules={[{ required: true, message: 'Please input your customer email!' }]}
+                        rules={[{ required: false, message: 'Please input your customer email!' }]}
                     >
                         <Input placeholder={props.email} />
                     </Form.Item>

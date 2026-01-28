@@ -1,11 +1,14 @@
 import { Button, Input, Space } from "antd"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import OrderItemCard from '../components/OrderItem'
 import axios from "axios";
 import { showNotification } from "./Notification";
 import notFound from '../../../assets/Logo/notfound.jpg'
 import API_ENDPOINTS from "../../../constant/backend-endpoints";
 
+interface customProps{
+    propsPhone:string
+}
 interface Customer {
     customerEmail: string;
     customerID: number;
@@ -45,6 +48,7 @@ interface Order {
     orderId: number;
     status: string;
     totalPrice: number;
+    time:string
 }
 
 interface OrderItem {
@@ -54,21 +58,26 @@ interface OrderItem {
     price: number;
     productId: Product;
     quantity: number;
+    time:string;
 }
 
-export default function ManageOrder() {
+export default function ManageOrder({propsPhone}: customProps) {
     const [phoneNumber, setphoneNumber] = useState<string>();
     const [loading, setLoading] = useState<boolean>(false);
     const [data, setData] = useState<OrderItem[]>([]);
 
+    useEffect(()=>{
+        console.log("Hi"+propsPhone);
+        fetchData(propsPhone);
+    },[]);
     // Fetch data from backend
-    const fetchData = async () => {
+    const fetchData = async (customNumber:string) => {
         try {
             const response = await axios.get(
                 API_ENDPOINTS.VIEWS_ORDER_SINGLE_CUSTOMER,
                 {
                     params: {
-                        CusPhoneNumber: phoneNumber
+                        CusPhoneNumber: customNumber?customNumber:phoneNumber
                     }
                 }
             );
@@ -91,7 +100,7 @@ export default function ManageOrder() {
 
     const checkCustomer = async () => {
         if (phoneNumber) {
-            fetchData();
+            fetchData(phoneNumber);
         } else {
             showNotification(
                 "error",
