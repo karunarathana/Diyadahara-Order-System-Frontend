@@ -55,7 +55,7 @@ export default function DashBoard({ changePage,setPhoneNumber}: DashBoardProps) 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     // Fetch data from backend
-    const fetchData = async () => {
+    const fetchData = async (categoryId:number) => {
         setLoading(true);
         try {
             const response = await axios.get(API_ENDPOINTS.VIEW_ALL_CATEGORY);
@@ -63,7 +63,7 @@ export default function DashBoard({ changePage,setPhoneNumber}: DashBoardProps) 
                 API_ENDPOINTS.GET_ALL_PRODUCT_SINGLE_CATEGORY,
                 {
                     params: {
-                        CategoryId: 1,
+                        CategoryId: categoryId,
                     },
                 }
             );
@@ -84,7 +84,7 @@ export default function DashBoard({ changePage,setPhoneNumber}: DashBoardProps) 
     };
 
     useEffect(() => {
-        fetchData();
+        fetchData(1);
     }, []);
 
     useEffect(() => {
@@ -100,7 +100,7 @@ export default function DashBoard({ changePage,setPhoneNumber}: DashBoardProps) 
 
     const loadProductItem = (categoryId: number) => {
         console.log(categoryId);
-
+         fetchData(categoryId);
     }
 
     const handleIncrease = (id: number) => {

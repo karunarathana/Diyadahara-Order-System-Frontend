@@ -1,7 +1,4 @@
 import React from 'react';
-import { showNotification } from './Notification';
-import axios from 'axios';
-import API_ENDPOINTS from '../../../constant/backend-endpoints';
 
 interface Customer {
   customerEmail: string;
@@ -52,6 +49,7 @@ interface OrderItem {
   price: number;
   productId: Product;
   quantity: number;
+  status:string;
 }
 
 interface OrderCardProps {
@@ -72,7 +70,7 @@ interface OrderCardViewProps {
 }
 
 // Single Order Item Card Component
-const OrderItemCardComponent: React.FC<OrderCardProps> = ({ orderItem, onSell }) => {
+const OrderItemCardComponent: React.FC<OrderCardProps> = ({ orderItem, onCancel, onSell }) => {
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -82,42 +80,6 @@ const OrderItemCardComponent: React.FC<OrderCardProps> = ({ orderItem, onSell })
       minute: '2-digit'
     });
   };
-
-  const canselCustomerOrder = async (orderId:number)=>{
-      console.log(orderId);
-      try {
-              const response = await axios.delete(
-                  API_ENDPOINTS.DELETE_ORDER,
-                  {
-                      params: {
-                          orderId: orderId,
-                      },
-                  }
-              );
-              console.log("**********************************")
-              console.log("API Call Started In Customer handleDelete");
-              console.log("**********************************")
-              console.log("API Response:", response);
-              console.log("API Call Finished In Customer handleDelete");
-              console.log("**********************************")
-      
-              if (response.data === "Order Delete Successfully") {
-                  showNotification(
-                      "success",
-                      "Success",
-                      "Order delete successfully!"
-                  );
-              }
-          } catch (error: any) {
-              console.error("API Error:", error);
-              showNotification(
-                  "error",
-                  "Server Error",
-                  error.response?.data?.message || "Something went wrong!"
-              );
-          }
-      
-  }
 
   const calculateDiscountedPrice = (originalPrice: number, discount: number) => {
     return originalPrice - (originalPrice * discount) / 100;
@@ -208,9 +170,9 @@ const OrderItemCardComponent: React.FC<OrderCardProps> = ({ orderItem, onSell })
           </div>
           <div>
             <span className="text-gray-600">Status:</span>
-            <span className={`ml-2 font-medium ${orderItem.orderId.customerId.verified ? 'text-green-600' : 'text-yellow-600'
+            <span className={`ml-2 font-medium ${orderItem.status == "SOLD" ? 'text-green-600' : 'text-yellow-600'
               }`}>
-              {orderItem.orderId.customerId.verified ? 'Verified' : 'Pending Verification'}
+              {orderItem.status == "SOLD" ? 'SOLD' : 'Pending Verification'}
             </span>
           </div>
         </div>
@@ -219,7 +181,7 @@ const OrderItemCardComponent: React.FC<OrderCardProps> = ({ orderItem, onSell })
       {/* Action Buttons */}
       <div className="border-t pt-4 flex justify-end space-x-3">
         <button
-          onClick={() => canselCustomerOrder(orderItem.orderItemId)}
+          onClick={() => onCancel(orderItem.orderItemId)}
           className="px-4 py-2 border border-red-600 text-red-600 rounded-md hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors"
         >
           Cancel Order
@@ -267,7 +229,7 @@ const OrderItemCard: React.FC<OrderCardViewProps> = ({
             <h2 className="text-2xl font-bold text-gray-800">Order Details</h2>
             <p className="text-gray-600 mt-1">
               Order #{orderData.itemData[0]?.orderId.orderId} •
-              Customer: {orderData.itemData[0]?.orderId.customerId.customerName} •
+              Customer: {orderData.itemData[0]?.orderId.customerId.customerName} 
               Time : {orderData.itemData[0]?.orderId.time}
             </p>
           </div>

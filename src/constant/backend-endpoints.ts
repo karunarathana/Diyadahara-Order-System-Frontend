@@ -1,4 +1,4 @@
-let BACKEND_ENDPOINT = "https://orders-manage-production.up.railway.app/";
+let BACKEND_ENDPOINT = "https://diyadahara-hotel-production.up.railway.app/";
 // let BACKEND_ENDPOINT = "http://localhost:8080/";
 let API_ROOT_ENDPOINT = "api/com-diyadahara";
 
@@ -22,6 +22,7 @@ const API_ENDPOINTS = {
     CREATE_PRODUCT: BACKEND_ENDPOINT + API_ROOT_ENDPOINT + "/create-product",
 
     DELETE_ORDER: BACKEND_ENDPOINT + API_ROOT_ENDPOINT + "/delete-order",
+    CHANGE_ORDER_STATUS: BACKEND_ENDPOINT + API_ROOT_ENDPOINT + "/change-order-status",
 
 
     ALL_DASHBOARD_DETIALS: BACKEND_ENDPOINT + API_ROOT_ENDPOINT + "/get-dashboard-details",

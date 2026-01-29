@@ -60,7 +60,7 @@ const FoodProductCard: React.FC<responseProductByCategory> = ({
         {/* Top Section: Name and Portion */}
         <div>
           <h3 className="font-semibold text-gray-800 text-lg mb-1 line-clamp-2">{foodName}</h3>
-          <div className="text-sm text-gray-500">{"250g"}</div>
+          <div className="text-sm text-gray-500">{status?status:''}</div>
         </div>
 
         {/* Price and Button Section */}
